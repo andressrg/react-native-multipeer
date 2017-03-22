@@ -16,6 +16,14 @@ RCT_EXPORT_METHOD(advertise:(NSString *)channel data:(NSDictionary *)data) {
   [self.advertiser startAdvertisingPeer];
 }
 
+RCT_EXPORT_METHOD(stopAdvertising) {
+    [self.advertiser stopAdvertisingPeer];
+}
+
+RCT_EXPORT_METHOD(stopBrowsing) {
+    [self.browser stopBrowsingForPeers];
+}
+
 RCT_EXPORT_METHOD(browse:(NSString *)channel)
 {
   self.browser = [[MCNearbyServiceBrowser alloc] initWithPeer:self.peerID serviceType:channel];
@@ -184,11 +192,11 @@ RCT_EXPORT_METHOD(disconnect:(RCTResponseSenderBlock)callback) {
   NSError *error = nil;
   id object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
   NSDictionary *parsedJSON = [NSDictionary dictionary];
-  
+
   if([object isKindOfClass:[NSDictionary class]]) {
     parsedJSON = object;
   }
-  
+
   [self.bridge.eventDispatcher sendDeviceEventWithName:@"RCTMultipeerConnectivityDataReceived"
                                body:@{
                                  @"sender": @{
@@ -210,7 +218,7 @@ RCT_EXPORT_METHOD(disconnect:(RCTResponseSenderBlock)callback) {
 //- (void)session:(MCSession *)session
 //didStartReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID withProgress:(NSProgress *)progress
 //{
-//  
+//
 //}
 
 

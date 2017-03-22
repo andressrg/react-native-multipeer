@@ -21,10 +21,10 @@ export default class MultipeerConnection extends EventEmitter {
       'RCTMultipeerConnectivityPeerLost',
       ((event) => {
         var peer = this._peers[event.peer.id];
-        peer.emit('lost');
-        this.emit('peerLost', { peer: { id: peer.id } });
         delete this._peers[event.peer.id];
         delete this._connectedPeers[event.peer.id];
+        peer.emit('lost');
+        this.emit('peerLost', { peer: { id: peer.id } });
       }).bind(this));
 
     var peerConnected = DeviceEventEmitter.addListener(
@@ -119,8 +119,16 @@ export default class MultipeerConnection extends EventEmitter {
     RCTMultipeerConnectivity.advertise(channel, info);
   }
 
+  stopAdvertising () {
+    RCTMultipeerConnectivity.stopAdvertising();
+  }
+
   browse(channel) {
     RCTMultipeerConnectivity.browse(channel);
+  }
+
+  stopBrowsing() {
+    RCTMultipeerConnectivity.stopBrowsing();
   }
 
 //  createStreamForPeer(peerId, name, callback) {
