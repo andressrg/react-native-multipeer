@@ -1,5 +1,6 @@
-import React, { DeviceEventEmitter, NativeModules } from 'react-native';
+import { DeviceEventEmitter, NativeModules } from 'react-native';
 import { EventEmitter } from 'events';
+import React from 'react';
 import Peer from './Peer';
 let RCTMultipeerConnectivity = NativeModules.MultipeerConnectivity;
 

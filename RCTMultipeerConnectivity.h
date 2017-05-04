@@ -1,5 +1,4 @@
-#import "RCTBridgeModule.h"
-
+#import <React/RCTBridgeModule.h>
 @import MultipeerConnectivity;
 
 @interface RCTMultipeerConnectivity : NSObject <RCTBridgeModule, NSStreamDelegate, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate>
