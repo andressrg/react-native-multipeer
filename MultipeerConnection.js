@@ -31,7 +31,8 @@ export default class MultipeerConnection extends EventEmitter {
     var peerConnected = DeviceEventEmitter.addListener(
       'RCTMultipeerConnectivityPeerConnected',
       (event => {
-        this._peers[event.peer.id].emit('connected');
+        this._peers[event.peer.id] &&
+          this._peers[event.peer.id].emit('connected');
         this._connectedPeers[event.peer.id] = this._peers[event.peer.id];
         this.emit('peerConnected', event);
       }).bind(this)
@@ -40,7 +41,8 @@ export default class MultipeerConnection extends EventEmitter {
     var peerConnecting = DeviceEventEmitter.addListener(
       'RCTMultipeerConnectivityPeerConnecting',
       (event => {
-        this._peers[event.peer.id].emit('connecting');
+        this._peers[event.peer.id] &&
+          this._peers[event.peer.id].emit('connecting');
         this.emit('peerConnecting', event);
       }).bind(this)
     );
@@ -48,7 +50,8 @@ export default class MultipeerConnection extends EventEmitter {
     var peerDisconnected = DeviceEventEmitter.addListener(
       'RCTMultipeerConnectivityPeerDisconnected',
       (event => {
-        this._peers[event.peer.id].emit('disconnected');
+        this._peers[event.peer.id] &&
+          this._peers[event.peer.id].emit('disconnected');
         delete this._connectedPeers[event.peer.id];
         this.emit('peerDisconnected', event);
       }).bind(this)
@@ -138,6 +141,13 @@ export default class MultipeerConnection extends EventEmitter {
 
   stopBrowsing() {
     RCTMultipeerConnectivity.stopBrowsing();
+  }
+
+  disconnect(callback) {
+    if (!callback) {
+      callback = () => {};
+    }
+    RCTMultipeerConnectivity.disconnect(callback);
   }
 
   //  createStreamForPeer(peerId, name, callback) {
